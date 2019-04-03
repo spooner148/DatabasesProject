@@ -6,7 +6,7 @@
 {
     margin: auto;
     text-align: center;
-    background-color: rgb(0, 30, 197);
+    background-color: rgb(165, 119, 19));
     color: white;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
@@ -14,7 +14,7 @@
 {
     margin: auto;
     border-radius: 25px;
-    background-color: rgba(200, 200, 200, 0.5);
+    background-color: rgba(172, 20, 20, 0.5);
     text-align: center;
     padding: 5px;
     width: 400px;
