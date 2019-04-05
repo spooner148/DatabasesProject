@@ -5,163 +5,168 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema Database_Project
+-- Schema SurveyDB
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `Database_Project` ;
+DROP SCHEMA IF EXISTS `SurveyDB` ;
 
 -- -----------------------------------------------------
--- Schema Database_Project
+-- Schema SurveyDB
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `Database_Project` ;
--- -----------------------------------------------------
--- Schema sys
--- -----------------------------------------------------
-USE `Database_Project` ;
+CREATE SCHEMA IF NOT EXISTS `SurveyDB` DEFAULT CHARACTER SET utf8 ;
+SHOW WARNINGS;
+USE `SurveyDB` ;
 
 -- -----------------------------------------------------
--- Table `Database_Project`.`Survey`
+-- Table `SurveyDB`.`Survey`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Database_Project`.`Survey` (
-  `S_Num` INT NOT NULL,
-  `S_Title` VARCHAR(45) NULL,
-  `S_Description` VARCHAR(45) NULL,
-  `S_Start` DATE NULL,
-  `S_End` DATE NULL,
-  PRIMARY KEY (`S_Num`))
+CREATE TABLE IF NOT EXISTS `SurveyDB`.`Survey` (
+  `SID` INT NOT NULL AUTO_INCREMENT,
+  `Title` VARCHAR(50) NULL DEFAULT NULL,
+  `Description` TEXT NULL DEFAULT NULL,
+  `Start` DATE NULL DEFAULT NULL,
+  `End` DATE NULL DEFAULT NULL,
+  PRIMARY KEY (`SID`))
 ENGINE = InnoDB;
 
+SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `Database_Project`.`Person`
+-- Table `SurveyDB`.`User`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Database_Project`.`Person` (
-  `U_Num` INT NULL,
-  `Email` VARCHAR(45) NOT NULL,
-  `Password` VARCHAR(45) NULL,
-  `Validation` TINYINT NULL,
-  `Usercol` VARCHAR(45) NULL,
+CREATE TABLE IF NOT EXISTS `SurveyDB`.`User` (
+  `Email` VARCHAR(50) NOT NULL,
+  `Password` VARCHAR(30) NULL DEFAULT NULL,
+  `Valid` TINYINT NULL DEFAULT 0,
   PRIMARY KEY (`Email`))
 ENGINE = InnoDB;
 
+SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `Database_Project`.`Question`
+-- Table `SurveyDB`.`Question`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Database_Project`.`Question` (
-  `Q_Num` INT NOT NULL,
-  `Question` MEDIUMTEXT NULL,
-  PRIMARY KEY (`Q_Num`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `Database_Project`.`T1 Question`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Database_Project`.`T1 Question` (
-  `Q_Num` INT NOT NULL,
-  `Answer` MEDIUMTEXT NULL,
-  `Question_Q_Num` INT NOT NULL,
-  PRIMARY KEY (`Q_Num`),
-  INDEX `fk_T1 Question_Question_idx` (`Question_Q_Num` ASC) VISIBLE,
-  CONSTRAINT `fk_T1 Question_Question`
-    FOREIGN KEY (`Question_Q_Num`)
-    REFERENCES `Database_Project`.`Question` (`Q_Num`)
+CREATE TABLE IF NOT EXISTS `SurveyDB`.`Question` (
+  `QID` INT NOT NULL AUTO_INCREMENT,
+  `SID` INT NOT NULL,
+  `Question` TEXT NULL DEFAULT NULL,
+  `Type` TINYINT NULL DEFAULT NULL,
+  PRIMARY KEY (`QID`),
+  INDEX `fk_Question_Survey1_idx` (`SID` ASC) VISIBLE,
+  CONSTRAINT `fk_Question_Survey1`
+    FOREIGN KEY (`SID`)
+    REFERENCES `SurveyDB`.`Survey` (`SID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `Database_Project`.`T2 Question`
+-- Table `SurveyDB`.`Created`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Database_Project`.`T2 Question` (
-  `Q_Num` INT NOT NULL,
-  `Answer` INT NULL,
-  `Question_Q_Num` INT NOT NULL,
-  PRIMARY KEY (`Q_Num`),
-  INDEX `fk_T2 Question_Question1_idx` (`Question_Q_Num` ASC) VISIBLE,
-  CONSTRAINT `fk_T2 Question_Question1`
-    FOREIGN KEY (`Question_Q_Num`)
-    REFERENCES `Database_Project`.`Question` (`Q_Num`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `Database_Project`.`Taken_By`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Database_Project`.`Taken_By` (
-  `S_Num` INT NOT NULL,
-  `Email` VARCHAR(45) NOT NULL,
-  `S_Completed` TINYINT NULL,
-  PRIMARY KEY (`S_Num`, `Email`),
-  INDEX `fk_Survey_has_User_User1_idx` (`Email` ASC) VISIBLE,
-  INDEX `fk_Survey_has_User_Survey1_idx` (`S_Num` ASC) VISIBLE,
-  CONSTRAINT `fk_Survey_has_User_Survey1`
-    FOREIGN KEY (`S_Num`)
-    REFERENCES `Database_Project`.`Survey` (`S_Num`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Survey_has_User_User1`
+CREATE TABLE IF NOT EXISTS `SurveyDB`.`Created` (
+  `Email` VARCHAR(50) NOT NULL,
+  `SID` INT NOT NULL,
+  PRIMARY KEY (`Email`, `SID`),
+  INDEX `fk_User_has_Survey_Survey1_idx` (`SID` ASC) VISIBLE,
+  INDEX `fk_User_has_Survey_User_idx` (`Email` ASC) VISIBLE,
+  CONSTRAINT `fk_User_has_Survey_User`
     FOREIGN KEY (`Email`)
-    REFERENCES `Database_Project`.`Person` (`Email`)
+    REFERENCES `SurveyDB`.`User` (`Email`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_User_has_Survey_Survey1`
+    FOREIGN KEY (`SID`)
+    REFERENCES `SurveyDB`.`Survey` (`SID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `Database_Project`.`Created_By`
+-- Table `SurveyDB`.`Taken`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Database_Project`.`Created_By` (
-  `S_Num` INT NOT NULL,
-  `Email` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`S_Num`, `Email`),
-  INDEX `fk_Survey_has_User_User2_idx` (`Email` ASC) VISIBLE,
-  INDEX `fk_Survey_has_User_Survey2_idx` (`S_Num` ASC) VISIBLE,
-  CONSTRAINT `fk_Survey_has_User_Survey2`
-    FOREIGN KEY (`S_Num`)
-    REFERENCES `Database_Project`.`Survey` (`S_Num`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Survey_has_User_User2`
+CREATE TABLE IF NOT EXISTS `SurveyDB`.`Taken` (
+  `Email` VARCHAR(50) NOT NULL,
+  `SID` INT NOT NULL,
+  `Completed` TINYINT NULL,
+  PRIMARY KEY (`Email`, `SID`),
+  INDEX `fk_User_has_Survey_Survey2_idx` (`SID` ASC) VISIBLE,
+  INDEX `fk_User_has_Survey_User1_idx` (`Email` ASC) VISIBLE,
+  CONSTRAINT `fk_User_has_Survey_User1`
     FOREIGN KEY (`Email`)
-    REFERENCES `Database_Project`.`Person` (`Email`)
+    REFERENCES `SurveyDB`.`User` (`Email`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_User_has_Survey_Survey2`
+    FOREIGN KEY (`SID`)
+    REFERENCES `SurveyDB`.`Survey` (`SID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `Database_Project`.`Survey_has_Question`
+-- Table `SurveyDB`.`User_Answers_Question`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Database_Project`.`Survey_has_Question` (
-  `S_Num` INT NOT NULL,
-  `Q_Num` INT NOT NULL,
-  `Email` VARCHAR(45) NOT NULL,
-  `Q_Completed` TINYINT NULL,
-  PRIMARY KEY (`S_Num`, `Q_Num`, `Email`),
-  INDEX `fk_Survey_has_Question_Question1_idx` (`Q_Num` ASC) VISIBLE,
-  INDEX `fk_Survey_has_Question_Survey1_idx` (`S_Num` ASC) VISIBLE,
-  INDEX `fk_Survey_has_Question_User1_idx` (`Email` ASC) VISIBLE,
-  CONSTRAINT `fk_Survey_has_Question_Survey1`
-    FOREIGN KEY (`S_Num`)
-    REFERENCES `Database_Project`.`Survey` (`S_Num`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Survey_has_Question_Question1`
-    FOREIGN KEY (`Q_Num`)
-    REFERENCES `Database_Project`.`Question` (`Q_Num`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Survey_has_Question_User1`
+CREATE TABLE IF NOT EXISTS `SurveyDB`.`User_Answers_Question` (
+  `Email` VARCHAR(50) NOT NULL,
+  `QID` INT NOT NULL,
+  `Answered` TINYINT NULL DEFAULT 0,
+  PRIMARY KEY (`Email`, `QID`),
+  INDEX `fk_User_has_Question_Question1_idx` (`QID` ASC) VISIBLE,
+  INDEX `fk_User_has_Question_User1_idx` (`Email` ASC) VISIBLE,
+  CONSTRAINT `fk_User_has_Question_User1`
     FOREIGN KEY (`Email`)
-    REFERENCES `Database_Project`.`Person` (`Email`)
+    REFERENCES `SurveyDB`.`User` (`Email`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_User_has_Question_Question1`
+    FOREIGN KEY (`QID`)
+    REFERENCES `SurveyDB`.`Question` (`QID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+SHOW WARNINGS;
+
+-- -----------------------------------------------------
+-- Table `SurveyDB`.`table1`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `SurveyDB`.`table1` (
+  `Answer` INT NOT NULL,
+  `Email` VARCHAR(50) NOT NULL,
+  `QID` INT NOT NULL,
+  PRIMARY KEY (`Answer`),
+  INDEX `fk_table1_User_Answers_Question1_idx` (`Email` ASC, `QID` ASC) VISIBLE,
+  CONSTRAINT `fk_table1_User_Answers_Question1`
+    FOREIGN KEY (`Email` , `QID`)
+    REFERENCES `SurveyDB`.`User_Answers_Question` (`Email` , `QID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+SHOW WARNINGS;
+
+-- -----------------------------------------------------
+-- Table `SurveyDB`.`table2`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `SurveyDB`.`table2` (
+  `Answer` TEXT NOT NULL,
+  `Email` VARCHAR(50) NOT NULL,
+  `QID` INT NOT NULL,
+  PRIMARY KEY (`Answer`),
+  INDEX `fk_table2_User_Answers_Question1_idx` (`Email` ASC, `QID` ASC) VISIBLE,
+  CONSTRAINT `fk_table2_User_Answers_Question1`
+    FOREIGN KEY (`Email` , `QID`)
+    REFERENCES `SurveyDB`.`User_Answers_Question` (`Email` , `QID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+SHOW WARNINGS;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
