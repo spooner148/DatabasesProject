@@ -136,11 +136,11 @@ SHOW WARNINGS;
 -- Table `SurveyDB`.`table1`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `SurveyDB`.`table1` (
-  `Answer` INT NOT NULL,
   `Email` VARCHAR(50) NOT NULL,
   `QID` INT NOT NULL,
-  PRIMARY KEY (`Answer`),
+  `Answer` INT NOT NULL,
   INDEX `fk_table1_User_Answers_Question1_idx` (`Email` ASC, `QID` ASC) VISIBLE,
+  PRIMARY KEY (`Email`, `QID`),
   CONSTRAINT `fk_table1_User_Answers_Question1`
     FOREIGN KEY (`Email` , `QID`)
     REFERENCES `SurveyDB`.`User_Answers_Question` (`Email` , `QID`)
@@ -154,11 +154,11 @@ SHOW WARNINGS;
 -- Table `SurveyDB`.`table2`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `SurveyDB`.`table2` (
-  `Answer` TEXT NOT NULL,
   `Email` VARCHAR(50) NOT NULL,
   `QID` INT NOT NULL,
-  PRIMARY KEY (`Answer`),
+  `Answer` TEXT NOT NULL,
   INDEX `fk_table2_User_Answers_Question1_idx` (`Email` ASC, `QID` ASC) VISIBLE,
+  PRIMARY KEY (`QID`, `Email`),
   CONSTRAINT `fk_table2_User_Answers_Question1`
     FOREIGN KEY (`Email` , `QID`)
     REFERENCES `SurveyDB`.`User_Answers_Question` (`Email` , `QID`)
