@@ -47,7 +47,7 @@ function searchQuestions()
                    // else
                    // {
                         var jsonObject = JSON.parse( xhr.responseText );
-                        var table = document.getElementById("contactList");
+                        var table = document.getElementById("QuestionList");
                         table.deleteTHead();
                         if(str.includes("No Records Found"))
                         {
