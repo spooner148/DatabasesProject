@@ -245,7 +245,7 @@ function searchQuestions()
 
 function doLogout()
 {
-    window.location.assign("index.html");
+    window.location.assign("localhost:8082/");
     localStorage.removeItem("Userid");
 }
 
