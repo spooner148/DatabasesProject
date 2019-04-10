@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>Survey Viewer</title>
+  </head>
+  <body>
+    <body onload="searchViewerHeading()"></body>
+    <body onload="searchViewerQuestions()"></body>
+    <div class="container">  
+      <h2>Survey Viewer List</h2>
+      
+
+
+
+
+
+
+
+<div class="form-row align-items-center">
+          <div class="col-auto my-1">
+            <button type="button" class="btn btn-primary btn-lg" onclick="window.location.assign("home.html");">Survey Hub</button>
+          </div>
+          <div class="col-auto my-1">
+            <button type="button" class="btn btn-primary btn-lg" onclick="doLogout()">Logout</button>
+          </div>
+          
+          
+        </div>
+      </form>
+      
+
+
+      <pre></pre>
+      <div class="col-auto my-1">
+        <table class="table table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Questions</th>
+              
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <div class="col-auto my-1">
+        <table id="ViewerList" style="visibility:hidden" class="table table-striped">
+        </table>
+      </div>
+
+
+
+
+
+
+      
+
+
+
+
+      <!-- Optional JavaScript -->
+      <!-- Javascript -->
+      <script src="Account.js"></script>
+      <script src="Questions.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    </div>
+  </body>
+</html>
