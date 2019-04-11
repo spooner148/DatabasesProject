@@ -1,0 +1,103 @@
+Create Account
+input: email, password
+output: none
+
+1) INSERT INTO user (email, password)
+      Values($email, $password)
+2) UPDATE user
+      SET password = $password
+      WHERE email = $email
+
+Sign In
+input: email
+output: password
+
+1) SELECT password
+    FROM user
+    WHERE email = $email
+
+list of surveys user is invited to:
+input: user email
+output: for each survey user is in an Invited relationship with:
+           survey name
+
+1) SELECT S.name
+    from survey S
+    Where s.creater_email = $email
+
+Dismiss Survey:
+input: user email, SID
+output: Delete "invited" tupple
+
+1) DELETE FROM invited
+    WHERE email = $Email AND
+      SID = $sid
+
+list of surveys created by user:
+input: user email
+output: for each survey whose creator email matches user's email:
+           survey name
+
+1) SELECT title
+   FROM survey S
+   Where creator_email = $email
+
+Add Question button:
+input: question description, type, SID
+output: none
+outcome: popup dissapears. Add question to survey in database, will appear on CreateSurvey page
+
+1) INSERT INTO Question (SID, question, type)
+      Values ($SID, $question, $type)
+
+Add Invitee button:
+input: survey name, invitee's user email
+output: none
+outcome: popup dissapears. Add an Invite relationship between user and survey, will appear on CreateSurvey page
+
+1)
+IF NOT EXISTS (
+SELECT * FROM user Where email = &email
+)
+  INSERT INTO user (email) VALUE ($email)
+INSERT INTO Invited (email, SID) Value ($email, $SID)
+
+Create Survey:
+input: survey name, survey description, creator email, start date, end date
+output: none
+outcome: move user to Home page. Add survey to database, will appear on Home page. Add a User_Answers_Question relationship for every user for every question.
+
+1) INSERT INTO Survey
+2) INSERT INTO User_Answers_Question
+3) INSERT INTO T1/T2
+
+Results List: (organized by question)
+input: survey name
+output: for each user in an Invited relationship with this survey whose completed bit is 1:
+           for each question in this survey, with user w/ survey completed bit
+           if type 1) avg of type1 for that QID
+           if type 2) list of answers for QID
+
+1)
+IF (SELECT type FROM type1 WHERE QID = $QID = 0)
+(SELECT AVG(Type1.Answer)
+    from type1 T
+    where t.QID = $QID)
+ELSE
+   (SELECT type2.answer
+   from type2 T
+   where t.qid = $QID)
+
+
+
+   Submit:
+   input: survey name, user email
+          for each question:
+             question number, question answer
+   output: none
+   outcome: move user to Home page. User_Answers_Question relationship populated for
+        all questions and 'answered' bit flipped to one for questions that are blank/unselected.
+        If avg of all questions answerd bit is 1, Invited's 'completed' bit flipped to one.
+
+  1)INSERT INTO Survey (title, creator_email, description, start, end)
+        VALUES ($title, $creator_email, $description, $start, $end)
