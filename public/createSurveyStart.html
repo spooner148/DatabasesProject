@@ -10,8 +10,8 @@
       function continueMakeSurvey() {
         location.assign("http://127.0.0.1:3000/createSurvey/questions");
       }
-      function logout() {
-        location.assign("http://127.0.0.1:3000/logout");
+      function back() {
+        location.assign("http://127.0.0.1:3000/home");
       }
     </script>
   </head>
@@ -23,7 +23,7 @@
                 <div id="LogOption1">
                     <br><h1>Survey Maker</h1>
                     <br>
-                    <form name="1" action="http://127.0.0.1:3000/createSurvey/addQuestion" method="post">
+                    <form name="1" action="http://127.0.0.1:3000/createSurvey/addSurvey" method="post">
                       <div>
                         <label for="title">Title</label>
                         <input type="text"  name="title" id="title">
