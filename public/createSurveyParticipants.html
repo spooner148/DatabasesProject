@@ -7,11 +7,17 @@
     <title>Group Project Login Page</title>
     <link href="splash.css" rel="stylesheet" type="text/css" />
     <script language="javascript">
-      function continueMakeSurvey() {
-        location.assign("http://127.0.0.1:3000/createSurvey/participants");
-      }
       function submitSurvey() {
         location.assign("http://127.0.0.1:3000/createSurvey/finish");
+      }
+      function checkEmail(theForm) {
+        if (theForm.email.value != theForm.email2.value){
+          alert('The emails do not match, please try again');
+          return false;
+        }
+        else {
+          return true;
+        }
       }
     </script>
   </head>
@@ -23,11 +29,11 @@
                 <div id="LogOption1">
                     <br><h1>Survey Maker</h1>
                     <br>
-                    <form name="1" action="http://127.0.0.1:3000/createSurvey/addParticipant" method="post">
+                    <form name="1" action="http://127.0.0.1:3000/createSurvey/addParticipant" onsubmit="return checkEmail(this)" method="post">
                       <div>
-                          <label for="email1">Email:</label>
+                          <label for="email">Email:</label>
                           <br>
-                          <input type="email" name="email1" id="email1">
+                          <input type="email" name="email" id="email">
                       </div>
                       <div>
                           <label for="email2">Confirm Email:</label>
@@ -35,9 +41,9 @@
                           <input type="email" name="email2" id="email2">
                       </div>
                       <div>
-                        <button onclick="continueMakeSurvey()">Login</button>
+                        <button onclick="checkEmail()">Submit</button>
                       </form>
-                        <button onclick="survey()">Back</button>
+                        <button type="button" onclick="submitSurvey()">Finish adding participants</button>
                     <br>
                     <div id="LogBox3">
                     </div>

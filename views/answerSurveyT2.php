@@ -1,3 +1,5 @@
+<!--spooner, Beirne-->
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -7,37 +9,30 @@
     <title>Group Project Login Page</title>
     <link href="splash.css" rel="stylesheet" type="text/css" />
     <script language="javascript">
-      function continueAddParticipants() {
-        location.assign("http://127.0.0.1:3000/createSurvey/participants");
+      function () {
+        location.assign("http://127.0.0.1:3000/");
+      }
+      function () {
+        location.assign("http://127.0.0.1:3000/");
       }
     </script>
   </head>
   <body>
-    <h1 id="Pname" >Survey Maker</h1>
+    <h1 id="Pname" >Question</h1>
     <div id="LogBox1">
         <div id="DiscriptBox">
             <div id="LogBox2">
                 <div id="LogOption1">
-                    <br><h1>Survey Maker</h1>
+                    <br><h1>Question</h1>
                     <br>
-                    <form name="1" action="http://127.0.0.1:3000/createSurvey/addQuestion" method="post">
+                    <form name="1" action="http://127.0.0.1:3000/answerSurvey/submitAnswerType2" method="post">
                       <div>
-                        <label for="question">Question:</label>
+                        <label for="answer">Question</label>
                         <br>
-                        <textarea name="question" id="question"></textarea>
+                        <textarea name="answer" id="answer"></textarea>
                       </div>
                       <div>
-                        <input type="radio" id="Type 1" name="type" value=0 checked>
-                        <label for="Type 1">Type 1</label>
-                        <input type="radio" id="Type 2" name="type" value=1>
-                        <label for="Type 2">Type 2</label>
-                      </div>
-                      <div>
-                        <br>
-                        <button>Add Another Question</button>
-                        <br>
-                        <br>
-                        <button type="button" onclick="continueAddParticipants()">Finished Adding Questions</button>
+                        <button onclick="--------------------------">Login</button>
                       </form>
                     <br>
                     <div id="LogBox3">

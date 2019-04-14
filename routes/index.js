@@ -3,7 +3,7 @@ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 var sql = mysql.createPool({
-  connectionLimit:2,
+  connectionLimit:3,
   host: "localhost",
   user: "root",
   password: "admin",
@@ -11,6 +11,8 @@ var sql = mysql.createPool({
 });
 
 router.get('/', function(req, res, next) {
+    sql.query('UPDATE loggedIn SET email = null', function (error, results, fields) {
+    if (error) throw error;});
     res.cookie('user', 'unknown').sendFile('Login.html', {root: './public/'  }); //Sets name = express
 });
 
@@ -24,11 +26,10 @@ router.post('/', function(req, res, next) {
           if (error) throw error;
           if(results[0].pass != "null"){
             if(results[0].pass == pass){
-              sql.query('SELECT valid FROM person WHERE email = ??' [email], function(error, results, fields){
+              sql.query('SELECT valid FROM person WHERE email = ?', [email], function(error, results, fields){
                 if (error) throw error;
                 if(results[0].valid == 1){
-                  //req.method='get';
-                  res.cookie('user', email).redirect('/home');
+                  res.cookie('user', email).redirect(307, '/loginUpdate');
                 }
                 else
                   res.send("USER NOT VALIDATED");
@@ -61,7 +62,17 @@ router.post('/', function(req, res, next) {
     });
 });
 
+router.post('/loginUpdate', function(req,res,next){
+    var email = req.body.Email;
+    sql.query('UPDATE loggedIn SET email = ?',[email], function (error, results, fields) {
+      if (error) throw error;});
+    res.redirect('/home');
+});
+
+
 router.post('/logout', function(req,res,next){
+    sql.query('UPDATE loggedIn SET email = null', function (error, results, fields) {
+      if (error) throw error;});
     res.clearCookie('user').redirect('/');
 });
 
