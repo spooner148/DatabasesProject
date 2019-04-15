@@ -1,0 +1,63 @@
+<!--Beirne, Hyatt-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <title>Group Project Login Page</title>
+    <link href="splash.css" rel="stylesheet" type="text/css" />
+    <script language="javascript">
+      function backToLogin() {
+        location.assign("http://127.0.0.1:3000/");
+      }
+      function checkPass(theForm) {
+        if (theForm.pass.value != theForm.pass2.value){
+          alert('The passwords do not match, please try again');
+          return false;
+        }
+        else {
+          return true;
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <h1 id="Pname" >Survey Maker</h1>
+    <div id="LogBox1">
+        <div id="DiscriptBox">
+            <div id="LogBox2">
+                <div id="LogOption1">
+                    <br><h1>Survey Maker</h1>
+                    <br>
+                    <br><h3>Welcome!</h3>
+                    <br>
+                    <form name="1" action="http://127.0.0.1:3000/createAccount/addUser" onsubmit="return checkEmail(this)" method="post">
+                      <div>
+                        <label for="email">Email:</label>
+                        <input type="email"  name="email" id="email">
+                      </div>
+                      <br>
+                      <div>
+                        <label for="pass">Please enter a password using only digits and numbers:</label>
+                        <input type="password" name="pass" id="pass" pattern="[0-9a-zA-Z]{2,8}">
+                      </div>
+                      <div>
+                        <label for="pass2">Password:</label>
+                        <input type="password" name="pass2" id="pass2">
+                      </div>
+                      <div>
+                        <button>Submit</button>
+                    </form>
+                        <button type="button" onclick="backToLogin()">Back</button>
+                    <br>
+                    <div id="LogBox3">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  </body>
+</html>

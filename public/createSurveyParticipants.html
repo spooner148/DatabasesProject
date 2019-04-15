@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <title>Group Project Login Page</title>
+    <link href="splash.css" rel="stylesheet" type="text/css" />
+    <script language="javascript">
+      function submitSurvey() {
+        location.assign("http://127.0.0.1:3000/createSurvey/finish");
+      }
+      function checkEmail(theForm) {
+        if (theForm.email.value != theForm.email2.value){
+          alert('The emails do not match, please try again');
+          return false;
+        }
+        else {
+          return true;
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <h1 id="Pname" >Survey Maker</h1>
+    <div id="LogBox1">
+        <div id="DiscriptBox">
+            <div id="LogBox2">
+                <div id="LogOption1">
+                    <br><h1>Survey Maker</h1>
+                    <br>
+                    <form name="1" action="http://127.0.0.1:3000/createSurvey/addParticipant" onsubmit="return checkEmail(this)" method="post">
+                      <div>
+                          <label for="email">Email:</label>
+                          <br>
+                          <input type="email" name="email" id="email">
+                      </div>
+                      <div>
+                          <label for="email2">Confirm Email:</label>
+                          <br>
+                          <input type="email" name="email2" id="email2">
+                      </div>
+                      <div>
+                        <button onclick="checkEmail()">Submit</button>
+                      </form>
+                        <button type="button" onclick="submitSurvey()">Finish adding participants</button>
+                    <br>
+                    <div id="LogBox3">
+                    </div>
+                </div>
+                <p id="LogError"></p>
+            </div>
+        </div>
+    </div>
+  </body>
+</html>
